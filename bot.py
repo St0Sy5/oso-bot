@@ -1,7 +1,14 @@
 import discord
 from discord.ext import commands
+import logging
 
-bot = commands.Bot(command_prefix='$$', description='A bot that greets the user back.')
+logger = logging.getLogger('discord')
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
+
+bot = commands.Bot(command_prefix='$$', description='A bear-y good bot!')
 
 @bot.event
 async def on_ready():
@@ -12,22 +19,42 @@ async def on_ready():
 
 @bot.command()
 async def add(ctx, a: int, b: int):
+    """adds two user given numbers"""
     await ctx.send(a+b)
 
 @bot.command()
+async def subtract(ctx, a: int, b: int):
+    """subtracts two user given numbers"""
+    await ctx.send(a-b)
+
+@bot.command()
 async def multiply(ctx, a: int, b: int):
+    """multiplies two user given numbers"""
     await ctx.send(a*b)
 
 @bot.command()
+async def divide(ctx, a: int, b: int):
+    """divides two user given numbers"""
+    await ctx.send(a/b)
+
+@bot.command()
 async def greet(ctx):
-    await ctx.send(":smiley: :wave: Hello, there!")
+    """sends a friendly greeting"""
+    await ctx.send(":smiley: :wave: Hello, there!  Hope you're having a bear-y good day!")
 
 @bot.command()
 async def cat(ctx):
+    """sends a funny cat gif"""
     await ctx.send("https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif")
 
 @bot.command()
+async def bareoso(ctx):
+    """sends a link to cool new music"""
+    await ctx.send("Check this out: https://bareoso.bandcamp.com/")
+
+@bot.command()
 async def info(ctx):
+    """returns information about this bot"""
     embed = discord.Embed(title="OSO-bot", description='A bear-y good bot!')
     embed.add_field(name="Author", value="PythonSlut#0477")
     embed.add_field(name="Server count", value=f"{len(bot.guilds)}")
